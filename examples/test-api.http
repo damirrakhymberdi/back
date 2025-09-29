@@ -1,0 +1,99 @@
+### AI IDE BAS Reviews API Tests
+### Используйте эти запросы для тестирования API
+
+### 1. Health Check
+GET http://localhost:3000/health
+
+### 2. Создать отзыв (требует авторизации)
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+{
+  "rating": 5,
+  "comment": "Отличный сервис! Очень помог с разработкой."
+}
+
+### 3. Создать отзыв без комментария
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+{
+  "rating": 4
+}
+
+### 4. Создать отзыв с пустым комментарием
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+{
+  "rating": 3,
+  "comment": ""
+}
+
+### 5. Получить мои отзывы
+GET http://localhost:3000/api/reviews/my
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 6. Получить мои отзывы с пагинацией
+GET http://localhost:3000/api/reviews/my?page=1&limit=5
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 7. Получить статистику отзывов
+GET http://localhost:3000/api/reviews/stats
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 8. Получить конкретный отзыв
+GET http://localhost:3000/api/reviews/1
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 9. Тест валидации - неверная оценка (должна быть ошибка 400)
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+{
+  "rating": 6,
+  "comment": "Тест валидации"
+}
+
+### 10. Тест валидации - отсутствует оценка (должна быть ошибка 400)
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+{
+  "comment": "Тест валидации без оценки"
+}
+
+### 11. Тест авторизации - без токена (должна быть ошибка 401)
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+
+{
+  "rating": 5,
+  "comment": "Тест без авторизации"
+}
+
+### 12. Тест авторизации - неверный токен (должна быть ошибка 401)
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+Authorization: Bearer invalid_token
+
+{
+  "rating": 5,
+  "comment": "Тест с неверным токеном"
+}
+
+### 13. Тест комментария слишком длинного (должна быть ошибка 400)
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+{
+  "rating": 5,
+  "comment": "Очень длинный комментарий который превышает лимит в 1000 символов. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+}
+
